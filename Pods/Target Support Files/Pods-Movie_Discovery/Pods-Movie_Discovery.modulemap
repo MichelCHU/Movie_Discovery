@@ -1,0 +1,6 @@
+framework module Pods_Movie_Discovery {
+  umbrella header "Pods-Movie_Discovery-umbrella.h"
+
+  export *
+  module * { export * }
+}

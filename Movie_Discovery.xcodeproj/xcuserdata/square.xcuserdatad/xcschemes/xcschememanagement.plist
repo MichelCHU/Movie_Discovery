@@ -7,7 +7,25 @@
 		<key>Movie_Discovery.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>4</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>5980E8CF27FB2CFE00D06C59</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5980E8E027FB2CFF00D06C59</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5980E8EB27FB2CFF00D06C59</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

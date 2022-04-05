@@ -1,0 +1,46 @@
+{
+    "page": 1,
+    "results": [
+        {
+            "adult": false,
+            "backdrop_path": "/fOy2Jurz9k6RnJnMUMRDAgBwru2.jpg",
+            "genre_ids": [
+                16,
+                10751,
+                35,
+                14
+            ],
+            "id": 508947,
+            "original_language": "en",
+            "original_title": "Turning Red",
+            "overview": "Thirteen-year-old Mei is experiencing the awkwardness of being a teenager with a twist – when she gets too excited, she transforms into a giant red panda.",
+            "popularity": 6261.493,
+            "poster_path": "/qsdjk9oAKSQMWs0Vt5Pyfh6O4GZ.jpg",
+            "release_date": "2022-03-01",
+            "title": "Turning Red",
+            "video": false,
+            "vote_average": 7.5,
+            "vote_count": 1403
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/lUwqoCLt8hThgf4SvukVMorPrkg.jpg",
+            "genre_ids": [
+                99
+            ],
+            "id": 940075,
+            "original_language": "en",
+            "original_title": "Embrace the Panda: Making Turning Red",
+            "overview": "A feature length documentary about the all-women team at the helm of Pixar's original feature, Turning Red. With unprecedented behind-the-scenes access to Director Domee Shi and her core leadership crew, this story shines a light on the powerful professional and personal journeys that brought this incredibly comical, utterly relatable, and deeply heartfelt story to the screen.",
+            "popularity": 17.03,
+            "poster_path": "/aP3cfzeZ1YX1EwJglpUkKtLLgao.jpg",
+            "release_date": "2022-03-11",
+            "title": "Embrace the Panda: Making Turning Red",
+            "video": false,
+            "vote_average": 6.7,
+            "vote_count": 16
+        }
+    ],
+    "total_pages": 1,
+    "total_results": 2
+}

@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct Movie_DiscoveryApp: App {
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
