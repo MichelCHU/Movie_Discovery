@@ -6,8 +6,14 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct ContentView: View {
+    @Environment(\.managedObjectContext) private var viewContext
+    
+    @FetchRequest(sortDescriptors: [])
+
+    private var watchList: FetchedResults<MovieData>
     
     var body: some View {
         TabView {
@@ -19,7 +25,6 @@ struct ContentView: View {
                     }
                 }
                 .tag(0)
-            
             HomeListView()
                 .tabItem {
                     VStack {
@@ -27,7 +32,17 @@ struct ContentView: View {
                         Text("Movies")
                     }
                 }
+                .tag(1)
+            WatchListView()
+                .tabItem {
+                    VStack {
+                        Image(systemName: "heart.fill")
+                        Text("Watch List")
+                    }
+                }
+                .tag(2)
         }
+        .preferredColorScheme(.dark)
     }
 }
 

@@ -68,6 +68,7 @@ struct HomeListView: View {
             self.topRatedState.loadMovies(with: .topRated)
             self.popularState.loadMovies(with: .popular)
         }
+        .accessibility(identifier: "Home")
     }
 }
 

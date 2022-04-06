@@ -10,14 +10,14 @@ import XCTest
 @testable import Movie_Discovery
 
 class RequestServiceTests: XCTestCase {
-    
+
     private let fetchData: MovieAPI = .init()
     private let sessionConfiguration: URLSessionConfiguration = {
         let sessionConfiguration = URLSessionConfiguration.ephemeral
         sessionConfiguration.protocolClasses = [URLProtocolFake.self]
         return sessionConfiguration
     }()
-    
+
     func testGetData_WhenNoDataIsPassed_ThenShouldReturnFailedCallback() {
         URLProtocolFake.fakeURLs = [FakeResponseData.url: (nil, nil, FakeResponseData.error)]
         //        let fakeSession = URLSession(configuration: sessionConfiguration)
@@ -33,7 +33,7 @@ class RequestServiceTests: XCTestCase {
         }
         wait(for: [expectation], timeout: 0.01)
     }
-    
+
     func testGetData_WhenIncorrectResponseIsPassed_ThenShouldReturnFailedCallback() {
         URLProtocolFake.fakeURLs = [FakeResponseData.url: (FakeResponseData.incorrectData, FakeResponseData.responseOK, nil)]
         //        let fakeSession = URLSession(configuration: sessionConfiguration)
@@ -48,7 +48,7 @@ class RequestServiceTests: XCTestCase {
         }
         wait(for: [expectation], timeout: 0.01)
     }
-    
+
     func testGetData_WhenUndecodableDataIsPassed_ThenShouldReturnFailedCallback() {
         URLProtocolFake.fakeURLs = [FakeResponseData.url: (FakeResponseData.incorrectData, FakeResponseData.responseOK, nil)]
         //        let fakeSession = URLSession(configuration: sessionConfiguration)
@@ -63,7 +63,7 @@ class RequestServiceTests: XCTestCase {
         }
         wait(for: [expectation], timeout: 0.01)
     }
-    
+
     func testGetData_WhenCorrectDataIsPassed_ThenShouldReturnSuccededCallback() {
         URLProtocolFake.fakeURLs = [FakeResponseData.url: (FakeResponseData.correctData, FakeResponseData.responseOK, nil)]
         //        let fakeSession = URLSession(configuration: sessionConfiguration)
@@ -73,7 +73,7 @@ class RequestServiceTests: XCTestCase {
                 XCTFail("Test getData method with correct data failed.")
                 return
             }
-            
+
             XCTAssertTrue(data.results[0].title == "turning-red")
             expectation.fulfill()
         }

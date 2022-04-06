@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DetailView: View {
     
+    let coredata = PersistenceController()
     let movieId: Int
     @ObservedObject private var detailLoadingMovie = DetailLoadingMovie()
     
@@ -21,6 +22,14 @@ struct DetailView: View {
                 MovieDetailListView(movie: self.detailLoadingMovie.movie!)
             }
         }
+        
+        .toolbar(content: {
+            Button(action: {
+                coredata.saveMovie(title: "", posterPath: "", releaseDate: "")
+            }, label: {
+                Label("Added to watchlist", systemImage: "plus")
+            })
+        })
         .navigationBarTitle(detailLoadingMovie.movie?.title ?? "")
         .onAppear {
             self.detailLoadingMovie.loadMovie(id: self.movieId)
@@ -29,7 +38,7 @@ struct DetailView: View {
 }
 
 struct MovieDetailListView: View {
-
+    
     let movie: Movie
     @State private var selectedTrailer: MovieVideo?
     let imageLoader = LoadingImage()
@@ -109,20 +118,11 @@ struct MovieDetailListView: View {
         .sheet(item: self.$selectedTrailer) { trailer in
             SafariView(url: trailer.youtubeURL!)
         }
-        //
-//        .toolbar(content: {
-//
-//            Button(action: {
-//                addView.toggle()
-//            }, label: {
-//                Label("Add item", systemImage: "plus")
-//            })
-//        })
     }
 }
 
 struct MovieDetailImage: View {
-    
+
     @ObservedObject var imageLoader: LoadingImage
     let imageURL: URL
     

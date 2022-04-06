@@ -10,9 +10,12 @@ import SwiftUI
 @main
 struct Movie_DiscoveryApp: App {
     
+    let coreData = PersistenceController()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(\.managedObjectContext, coreData.persistantContainer.viewContext)
         }
     }
 }

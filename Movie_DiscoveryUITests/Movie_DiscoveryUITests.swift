@@ -6,9 +6,10 @@
 //
 
 import XCTest
+@testable import Movie_Discovery
 
 class Movie_DiscoveryUITests: XCTestCase {
-
+    
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
 
@@ -38,5 +39,81 @@ class Movie_DiscoveryUITests: XCTestCase {
                 XCUIApplication().launch()
             }
         }
+    }
+    
+    func testTappedMoviesButtonsShowHomeView() throws {
+        
+        let app = XCUIApplication()
+        app.launch()
+        app.buttons["Movies"].tap()
+        
+        XCTAssert(app.staticTexts["Now Playing"].exists)
+//        XCTAssert(app.staticTexts["Top Rated"].exists)
+//        XCTAssert(app.staticTexts["Upcoming"].exists)
+//        XCTAssert(app.staticTexts["Popular"].exists)
+    }
+    
+    func testButtonNowPlaying_ShoudldGoingTo_ShowDetail() throws {
+
+        let app = XCUIApplication()
+        app.launch()
+        app.buttons["Movies"].tap()
+        
+        XCTAssert(app.staticTexts["Now Playing"].exists)
+        
+  
+    }
+    
+    func testSearchBar_ByTapping() throws {
+        let app = XCUIApplication()
+        app.launch()
+        app.buttons["Search"].tap()
+        
+        XCTAssert(app.staticTexts["Search"].exists)
+    }
+    
+    
+    func testSearchBar_ByTapping_SearchMovie_TurningRed() throws {
+        let app = XCUIApplication()
+        app.launch()
+        app.buttons["Search"].tap()
+        app.tables.searchFields["Search movies"].tap()
+        app.searchFields["Search movies"].typeText("Turning Red")
+        
+    }
+    
+    func testSearchBar_ByTapping_SearchMovie_NoTurningRed() throws {
+        let app = XCUIApplication()
+        app.launch()
+        app.buttons["Search"].tap()
+        app.tables.searchFields["Search movies"].tap()
+        app.searchFields["Search movies"].typeText("Turning Red")
+        
+        XCTAssertFalse(app.staticTexts["Hulk"].exists)
+    }
+    
+    
+    func testButtonNowPlaying_ShoudldGoingTo_ShowMovieDetails() throws {
+
+        let app = XCUIApplication()
+        app.launch()
+        app.buttons["Movies"].tap()
+        
+        XCTAssert(app.staticTexts["Now Playing"].exists)
+        app.buttons["Turning Red"].tap()
+        XCTAssert(app.staticTexts["Starring"].exists)
+    }
+    
+    func testButtonNowPlaying_ShoudldGoingTo_ShowMovieDetails_ButtonDone() throws {
+        
+        let app = XCUIApplication()
+        app.launch()
+        app.buttons["Movies"].tap()
+        
+        XCTAssert(app.staticTexts["Now Playing"].exists)
+        app.buttons["Turning Red"].tap()
+        XCTAssert(app.staticTexts["Trailers"].exists)
+        app.buttons["Official Trailer"].tap()
+        app.buttons["Done"].tap()
     }
 }
