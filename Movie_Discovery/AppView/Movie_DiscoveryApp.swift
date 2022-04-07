@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct Movie_DiscoveryApp: App {
     
-    let coreData = PersistenceController()
+  @StateObject private var coreData = CoreDataManager()
     
     var body: some Scene {
         WindowGroup {

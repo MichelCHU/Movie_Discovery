@@ -1,5 +1,5 @@
 //
-//  Persistence.swift
+//  CoreDataManager.swift
 //  Movie_Discovery
 //
 //  Created by Square on 06/04/2022.
@@ -8,40 +8,40 @@
 import SwiftUI
 import CoreData
 
-final class PersistenceController {
-    
+final class CoreDataManager: ObservableObject {
+
+    @Published var movies: [MovieData] = []
     let persistantContainer: NSPersistentContainer
     
     init() {
         persistantContainer = NSPersistentContainer(name: "Movie_DiscoveryDataModel")
         persistantContainer.loadPersistentStores { storeDescription, error in
             if let error = error as NSError? {
-                fatalError("Unresolved error: \(error)")
+                fatalError("Unresolved error: \(error.localizedDescription)")
             }
         }
     }
     
-    func allMovies() -> [MovieData] {
+    func getAllMovies() {
         let fetchRequest: NSFetchRequest<MovieData> = MovieData.fetchRequest()
         
         do{
-            return try persistantContainer.viewContext.fetch(fetchRequest)
+            movies = try persistantContainer.viewContext.fetch(fetchRequest)
         } catch {
-            return []
+            movies = []
         }
     }
     
-    func saveMovie(title: String,posterPath: String, releaseDate: String) {
+    func saveMovie(title: String, posterPath: String, releaseDate: String) {
         
         let movieData = MovieData(context: persistantContainer.viewContext)
         movieData.title = title
         movieData.posterPath = posterPath
         movieData.releaseDate = releaseDate
         
-        do{
+        do {
             try persistantContainer.viewContext.save()
         } catch {
-            persistantContainer.viewContext.rollback()
             print("Failed to save \(error)")
         }
     }
@@ -51,7 +51,7 @@ final class PersistenceController {
             try persistantContainer.viewContext.save()
         } catch {
             persistantContainer.viewContext.rollback()
-            print("Failed to save \(error)")
+            print("Failed to save context \(error)")
         }
     }
 }

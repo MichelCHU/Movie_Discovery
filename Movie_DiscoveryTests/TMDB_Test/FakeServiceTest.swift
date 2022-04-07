@@ -5,8 +5,7 @@
 //  Created by Square on 05/04/2022.
 //
 
-import SwiftUI
-
+import Foundation
 @testable import Movie_Discovery
 
 struct FakeResponse {
@@ -14,7 +13,7 @@ struct FakeResponse {
     var data: Data?
 }
 
-final class FakeServiceTest : MovieAPI {
+final class FakeServiceTest : FecthService {
     
     private let baseAPIURL = "https://api.themoviedb.org/3"
     private let fakeResponse: FakeResponse
@@ -28,18 +27,37 @@ final class FakeServiceTest : MovieAPI {
             completion(.failure(.invalidEndpoint))
             return
         }
-        
-        func searchMovie(query: String, completion: @escaping (Result<MovieResponse, MovieError>) -> ()) {
-            guard let url = URL(string: "\(baseAPIURL)/search/movie") else {
-                completion(.failure(.invalidEndpoint))
-                return
-            }
-            self.loadURLAndDecode(url: url, params: [
-                "language": "en-US",
-                "include_adult": "false",
-                "region": "US",
-                "query": query
-            ], completion: completion)
+    }
+    
+    func fetchMovies(from endpoint: MovieList, completion: @escaping (Result<MovieResponse, MovieError>) -> Void) {
+        guard let url = URL(string: "\(baseAPIURL)/movie/\(endpoint.rawValue)") else {
+            completion(.failure(.invalidEndpoint))
+            return
         }
+        self.loadURLAndDecode(url: url, completion: completion)
+    }
+    
+    func fetchMovie(id: Int, completion: @escaping (Result<Movie, MovieError>) -> Void) {
+        guard let url = URL(string: "\(baseAPIURL)/movie/\(id)") else {
+            completion(.failure(.invalidEndpoint))
+            return
+        }
+        self.loadURLAndDecode(url: url, params: [
+            "append_to_response": "videos,credits"
+        ], completion: completion)
+    }
+    
+    func searchMovie(query: String, completion: @escaping (Result<MovieResponse, MovieError>) -> Void) {
+        
+        guard let url = URL(string: "\(baseAPIURL)/search/movie") else {
+            completion(.failure(.invalidEndpoint))
+            return
+        }
+        self.loadURLAndDecode(url: url, params: [
+            "language": "en-US",
+            "include_adult": "false",
+            "region": "US",
+            "query": query
+        ], completion: completion)
     }
 }

@@ -5,7 +5,7 @@
 //  Created by Square on 05/04/2022.
 //
 
-import SwiftUI
+import Foundation
 
 // URLProtocol gère le chargement des données que nous souhaitons renvoyer
 class URLProtocolFake: URLProtocol {

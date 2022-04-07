@@ -33,7 +33,7 @@ struct ContentView: View {
                     }
                 }
                 .tag(1)
-            WatchListView()
+            WatchListView(coreDM: CoreDataManager())
                 .tabItem {
                     VStack {
                         Image(systemName: "heart.fill")

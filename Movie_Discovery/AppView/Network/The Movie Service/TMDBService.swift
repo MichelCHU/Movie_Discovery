@@ -17,10 +17,15 @@ protocol FecthService {
 
 class MovieAPI: FecthService {
     
+    
     private let apiKey = "9aa02db6c7f008370607b92759c620cc"
     private let baseAPIURL = "https://api.themoviedb.org/3"
-    private let urlSession = URLSession.shared
     private let jsonDecoder = CallJSONDecoder.jsonDecoder
+    private let urlSession: URLSession
+    
+    init(session: URLSession = URLSession.shared) {
+        self.urlSession = session
+    }
     
     // rawValue = equivalent to this instance
     func fetchMovies(from endpoint: MovieList, completion: @escaping (Result<MovieResponse, MovieError>) -> ()) {

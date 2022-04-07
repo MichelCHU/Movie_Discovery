@@ -10,35 +10,39 @@ import CoreData
 
 struct WatchListView: View {
     
-    let coreData = PersistenceController()
-    private func favoriteMovie() {
-        showMovies = coreData.allMovies()
-    }
-    @State private var showMovies:[MovieData] = [MovieData]()
-    
+    @StateObject var  coreDM = CoreDataManager()
+    @State private var movies: [MovieData] = [MovieData]()
     var body: some View {
-        VStack{
-            List {
-                
-                ForEach(showMovies, id: \.self) { movie in
-                    Text(movie.title ?? "")
-                    Text(movie.posterPath ?? "")
-                    Text(movie.releaseDate ?? "")
-                }.onDelete(perform: { indexSet in
-                    indexSet.forEach { index in
-                        let movie = showMovies[index]
-                        coreData.deleteMovie(movie: movie)
+        NavigationView{
+            VStack{
+                List{
+                    if coreDM.movies.isEmpty {
+                        Text("Watchlist is empty")
+                            .foregroundColor(.gray)
+                            .font(.title)
+                            .frame(width: 360, height: 25, alignment: .leading)
+                            .padding(.leading, 25)
+                            .padding(.trailing, 25)
+
+                    } else {
+                        ForEach(coreDM.movies, id: \.self) { movie in
+                            Text(movie.title ?? "")
+                        }.onDelete(perform: { (indexSet) in
+                            self.coreDM.movies.remove(atOffsets: indexSet)
+                            })
                     }
+                }.padding()
+                .navigationTitle("Watch List")
+                .onAppear(perform: {
+                    coreDM.getAllMovies()
                 })
             }
-            .onAppear(perform: {
-                favoriteMovie()
-            })
         }
     }
 }
+
 struct WatchListView_Previews: PreviewProvider {
     static var previews: some View {
-        WatchListView()
+        WatchListView(coreDM: CoreDataManager())
     }
 }

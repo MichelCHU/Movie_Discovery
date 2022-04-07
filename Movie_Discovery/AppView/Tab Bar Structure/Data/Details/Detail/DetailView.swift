@@ -9,9 +9,14 @@ import SwiftUI
 
 struct DetailView: View {
     
-    let coredata = PersistenceController()
+    @StateObject var coreDM = CoreDataManager()
     let movieId: Int
+    @State private var movies: [MovieData] = [MovieData]()
     @ObservedObject private var detailLoadingMovie = DetailLoadingMovie()
+    
+    func addButton() {
+        coreDM.saveMovie(title: detailLoadingMovie.movie?.title ?? "", posterPath: "", releaseDate: "")
+    }
     
     var body: some View {
         ZStack {
@@ -22,14 +27,14 @@ struct DetailView: View {
                 MovieDetailListView(movie: self.detailLoadingMovie.movie!)
             }
         }
-        
         .toolbar(content: {
             Button(action: {
-                coredata.saveMovie(title: "", posterPath: "", releaseDate: "")
+                addButton()
             }, label: {
-                Label("Added to watchlist", systemImage: "plus")
+                Label("Addwatchlist", systemImage: "heart")
+                    
             })
-        })
+        }).accessibility(identifier: "ButtonAdded")
         .navigationBarTitle(detailLoadingMovie.movie?.title ?? "")
         .onAppear {
             self.detailLoadingMovie.loadMovie(id: self.movieId)
@@ -122,7 +127,7 @@ struct MovieDetailListView: View {
 }
 
 struct MovieDetailImage: View {
-
+    
     @ObservedObject var imageLoader: LoadingImage
     let imageURL: URL
     

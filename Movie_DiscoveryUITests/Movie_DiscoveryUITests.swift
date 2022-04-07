@@ -48,20 +48,15 @@ class Movie_DiscoveryUITests: XCTestCase {
         app.buttons["Movies"].tap()
         
         XCTAssert(app.staticTexts["Now Playing"].exists)
-//        XCTAssert(app.staticTexts["Top Rated"].exists)
-//        XCTAssert(app.staticTexts["Upcoming"].exists)
-//        XCTAssert(app.staticTexts["Popular"].exists)
     }
     
-    func testButtonNowPlaying_ShoudldGoingTo_ShowDetail() throws {
+    func testButtonNowPlaying_ShoudldGoingTo_Watchlist() throws {
 
         let app = XCUIApplication()
         app.launch()
-        app.buttons["Movies"].tap()
+        app.buttons["Watch List"].tap()
         
-        XCTAssert(app.staticTexts["Now Playing"].exists)
-        
-  
+        XCTAssert(app.staticTexts["Watch List"].exists)
     }
     
     func testSearchBar_ByTapping() throws {
@@ -79,7 +74,7 @@ class Movie_DiscoveryUITests: XCTestCase {
         app.buttons["Search"].tap()
         app.tables.searchFields["Search movies"].tap()
         app.searchFields["Search movies"].typeText("Turning Red")
-        
+        XCTAssert(app.waitForExistence(timeout: 0.5))
     }
     
     func testSearchBar_ByTapping_SearchMovie_NoTurningRed() throws {
@@ -92,6 +87,15 @@ class Movie_DiscoveryUITests: XCTestCase {
         XCTAssertFalse(app.staticTexts["Hulk"].exists)
     }
     
+    func testSearchBar_ByTapping_SearchMovie_isEmpty() throws {
+        let app = XCUIApplication()
+        app.launch()
+        app.buttons["Search"].tap()
+        app.tables.searchFields["Search movies"].tap()
+        app.searchFields["Search movies"].typeText("")
+        
+        XCTAssertFalse(app.staticTexts["Hulk"].exists)
+    }
     
     func testButtonNowPlaying_ShoudldGoingTo_ShowMovieDetails() throws {
 
